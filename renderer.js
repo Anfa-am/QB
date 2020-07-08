@@ -2,8 +2,8 @@ var { ipcRenderer } = require('electron')
 
 var av = 0
 
-var webTemplate = '<webview class="tab-page" src="{{src}}" preload="./preload.js" autosize="on"></webview>'
-var tabTemplate = '<div class="tab" data-color="{{color}}"> <img src="{{src}}"/> <span> {{title}} <span> <i class="close"/> </div>'
+var webTemplate = '<webview transparent="true" class="tab-page" src="{{src}}" preload="./preload.js" autosize="on"></webview>'
+var tabTemplate = '<div class="tab" data-color="{{color}}"> <a href="#"> hello</a><img src="{{src}}"/> <span> {{title}} <span> <i class="close"/> </div>'
 
 function focusTab(tab){
     //hide  other views
@@ -26,11 +26,12 @@ function createTab(url){
       }
     });
 
-    //load extensions
 
     views[av].addEventListener('dom-ready', function () {
         views[av].insertCSS('*::-webkit-scrollbar { display: none; }')
     });
+
+
 }
 
 
