@@ -1,5 +1,8 @@
+*::-webkit-scrollbar { display: none; }
+
 html, body{
     position: relative;
+    font-family: 'Nunito', sans-serif;
     width: 100vw;
     height: 100vh;
     top: 0;
@@ -8,14 +11,23 @@ html, body{
     border-radius: 4px;
     margin: 0;
     padding: 0;
+    background-color: transparent;
 }
+
+body{ 
+    overflow-y: scroll;
+}
+
 .webviews{
-    position: relative;
+    position: absolute;
     width: 100vw;
-    height: calc(100vh - 50px);
+    height: 100vh;
+    margin-bottom: 35px;
+    z-index: 1;
     top: 0;
     left: 0;
 }
+
 .tab-page{
     display: inline-flex !important;
     width: 100%;
@@ -23,11 +35,55 @@ html, body{
     top: 0;
 }
 
+.tabs-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
 .tabs{
-    position: absolute;
+    position: fixed;
     width: 100vw;
-    height: 50px;
-    background-color: #e9e;
+    height: 35px;
+    background-color: rgba(225,225,225,0.3);
+    backdrop-filter: blur(5px);
     bottom: 0;
     left: 0;
+    z-index: 2;
+    display: flex;
+}
+.tab{
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    width: auto;
+    height: 100%;
+    min-width: 75px;
+    box-sizing: content-box;
+    align-items: center;
+    color: white;
+    padding: 0 20px;
+    border-radius: 4px;
+    max-width: 150px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.tab span{
+    padding-left: 10px;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.tab img{
+    position: absolute;
+    display: block;
+    filter: blur(8px) brightness(0.75);
+    z-index: -1;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: auto;
+    transform: scale(1.5) translateY(-30%);
+    transform-origin: center;
 }

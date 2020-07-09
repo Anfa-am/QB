@@ -1,9 +1,13 @@
-var { ipcRenderer } = require('electron')
+var { ipcRenderer, globalShortcut } = require('electron')
 
 var av = 0
 
 var webTemplate = '<webview transparent="true" class="tab-page" src="{{src}}" preload="./preload.js" autosize="on"></webview>'
-var tabTemplate = '<div class="tab" data-color="{{color}}"> <a href="#"> hello</a><img src="{{src}}"/> <span> {{title}} <span> <i class="close"/> </div>'
+var tabTemplate = '<div class="tab"> <img src="{{src}}"/> <span> {{title}} <span> <i class="close"/> </div>'
+
+ipcRenderer.on('thing', function (event, store) {
+    console.log(store);
+});
 
 function focusTab(tab){
     //hide  other views
@@ -21,7 +25,8 @@ function createTab(url){
 
     views[av].addEventListener("ipc-message", function (e) {
       if (e.channel === "updatetab") {
-        document.querySelectorAll('.tabs-list')[av].innerHTML = document.querySelectorAll('.tabs-list')[av].innerHTML.replace('{{src}}', e.args[0].favicon).replace('{{title}}', e.args[0].title).replace('{{color}}', e.args[0].color)
+          document.querySelectorAll('.tab')[av].innerHTML = tabTemplate.replace('{{src}}', e.args[0].favicon).replace('{{title}}', e.args[0].title).replace('</div>', '').replace('<div class="tab">', '')
+
         focusTab(av)
       }
     });
@@ -29,21 +34,17 @@ function createTab(url){
 
     views[av].addEventListener('dom-ready', function () {
         views[av].insertCSS('*::-webkit-scrollbar { display: none; }')
+
+        views[av].openDevTools();
     });
 
 
 }
 
 
-
 //create window create tab
 
-createTab('http://google.com')
-
-
-
-
-
+createTab('https://duckduckgo.com')
 
 
 function reloadView () {
@@ -59,7 +60,7 @@ function forwardView () {
 }
 
 function homeView () {
-    view.loadURL('https://www.google.com/');
+    view.loadURL('https://duckduckgo.com');
 }
 
 //Load DevTools
