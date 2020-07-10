@@ -5,8 +5,10 @@ var av = 0
 var webTemplate = '<webview transparent="true" class="tab-page" src="{{src}}" preload="./preload.js" autosize="on"></webview>'
 var tabTemplate = '<div class="tab"> <img src="{{src}}"/> <span> {{title}} <span> <i class="close"/> </div>'
 
-ipcRenderer.on('thing', function (event, store) {
-    console.log(store);
+ipcRenderer.on('newTab', function (event, store) { createTab('https://duckduckgo.com') });
+ipcRenderer.on('refreshTab', function (event, store) {
+    var views = document.querySelectorAll('.tab-page');
+    views[av].reload(); 
 });
 
 function focusTab(tab){
@@ -25,20 +27,15 @@ function createTab(url){
 
     views[av].addEventListener("ipc-message", function (e) {
       if (e.channel === "updatetab") {
-          document.querySelectorAll('.tab')[av].innerHTML = tabTemplate.replace('{{src}}', e.args[0].favicon).replace('{{title}}', e.args[0].title).replace('</div>', '').replace('<div class="tab">', '')
-
+        document.querySelectorAll('.tab')[av].innerHTML = tabTemplate.replace('{{src}}', e.args[0].favicon).replace('{{title}}', e.args[0].title).replace('</div>', '').replace('<div class="tab">', '')
         focusTab(av)
       }
     });
 
-
     views[av].addEventListener('dom-ready', function () {
         views[av].insertCSS('*::-webkit-scrollbar { display: none; }')
-
-        views[av].openDevTools();
+        //views[av].openDevTools();
     });
-
-
 }
 
 

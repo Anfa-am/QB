@@ -25,8 +25,9 @@ function createWindow () {
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
-  globalShortcut.register('CommandOrControl+w', () => { mainWindow.webContents.send('thing', false); })
-  globalShortcut.register('CommandOrControl+w', () => { return false })
+  globalShortcut.register('CommandOrControl+w', () => { mainWindow.webContents.send('closeTab', false); })
+  globalShortcut.register('CommandOrControl+t', () => {  mainWindow.webContents.send('newTab', false);  })
+  globalShortcut.register('CommandOrControl+r', () => {  mainWindow.webContents.send('refreshTab', false);  })
 }
 
 // This method will be called when Electron has finished
