@@ -13,5 +13,10 @@
   "devDependencies": {
     "electron": "^9.0.5",
     "mousetrap": "^1.6.5"
+  },
+  "dependencies": {
+    "@cliqz/adblocker-electron": "^1.16.1",
+    "electron-localshortcut": "^3.2.1",
+    "torrent-search-api": "^2.1.3"
   }
 }
